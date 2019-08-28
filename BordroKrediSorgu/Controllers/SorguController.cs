@@ -30,42 +30,49 @@ namespace BordroKrediSorgu.Controllers
         }
 
 
-        // GET api/Sorgu
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //// GET api/Sorgu
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET api/Sorgu/5
         public KrediSorguCevap Get(string hesapno, string maasadet, string kredi)
         {
-                KrediSorguCevap krediSorguCevap = new KrediSorguCevap();
-                KrediSorgu sorgu = new KrediSorgu();
-                sorgu.HesapNo = hesapno;
-                sorgu.MaasAdet = int.Parse(maasadet);
-                sorgu.KrediTutar = double.Parse(kredi);
+            KrediSorguCevap krediSorguCevap = new KrediSorguCevap();
+            KrediSorgu sorgu = new KrediSorgu();
+            sorgu.HesapNo = hesapno;
+            sorgu.MaasAdet = int.Parse(maasadet);
+            sorgu.KrediTutar = double.Parse(kredi);
 
-                //Log Info To DB
-                string RequestId=WriteKrediSorgu(sorgu);
+            DoKrediSorgu(hesapno, krediSorguCevap, sorgu);
 
-                //bilin Sorgulam Todo
-                krediSorguCevap.Durumu = false;
-                krediSorguCevap.DurumAciklama = "Bilin Uygun değil";
+            return krediSorguCevap;
+        }
+
+        private void DoKrediSorgu(string hesapno, KrediSorguCevap krediSorguCevap, KrediSorgu sorgu)
+        {
+            //Log Info To DB
+            string RequestId = WriteKrediSorgu(sorgu);
+
+            //bilin Sorgulam Todo
+            krediSorguCevap.Durumu = false;
+            krediSorguCevap.DurumAciklama = "Bilin Uygun değil";
 
 
-                krediSorguCevap.Durumu = false;
-                krediSorguCevap.DurumAciklama = "Uygun Değil";
+            krediSorguCevap.Durumu = false;
+            krediSorguCevap.DurumAciklama = "Uygun Değil";
 
             //Hesap Bilgi Sorgula
             DataTable dth = GetHesapBilgi(hesapno);
-            if (dth!=null) 
+            if (dth != null)
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append("RequestId=").Append(RequestId).Append(",")
-                  .Append("TCNO=").Append(dth.Rows[0]["TCNO"].ToString()).Append(",")
-                  .Append("DEPKOD=").Append(dth.Rows[0]["DEPKOD"].ToString()).Append(",")
-                  .Append("FIRMAADI=").Append(dth.Rows[0]["FIRMAADI"].ToString());
-                 
+                sb.Append("RequestId=").Append(RequestId).Append(" ")
+                  .Append("TCNO=").Append(dth.Rows[0]["TCNO"].ToString()).Append(" ")
+                  .Append("DEPKOD=").Append(dth.Rows[0]["DEPKOD"].ToString()).Append(" ")
+                  .Append("PERKOD=").Append(dth.Rows[0]["PERKOD"].ToString());
+
                 //Execute Exe and Wait unit finish
                 bool hasExited = RunProcess(processName, sb.ToString());
                 if (hasExited)
@@ -77,26 +84,27 @@ namespace BordroKrediSorgu.Controllers
                         if (dt.Rows[0]["Status"].ToString() == "1")
                         {
                             krediSorguCevap.Durumu = true;
-                        }else
+                        }
+                        else
                         {
                             krediSorguCevap.Durumu = false;
                         }
-                       
+
                         krediSorguCevap.DurumAciklama = dt.Rows[0]["StatusDescription"].ToString();
 
-                    }else
+                    }
+                    else
                     {
                         krediSorguCevap.Durumu = false;
                         krediSorguCevap.DurumAciklama = "Kredi bilgisi okunamadı.";
                     }
                 }
-            }else
+            }
+            else
             {
                 krediSorguCevap.Durumu = false;
                 krediSorguCevap.DurumAciklama = "Hesap Kod tanımlı değil.";
             }
-
-            return krediSorguCevap;
         }
 
         // POST api/Sorgu
@@ -105,10 +113,7 @@ namespace BordroKrediSorgu.Controllers
             KrediSorguCevap krediSorguCevap = new KrediSorguCevap();
             krediSorguCevap.Durumu = false;
 
-            if (sorgu.HesapNo.Equals("123"))
-            {
-                krediSorguCevap.Durumu = true;
-            }
+            DoKrediSorgu(sorgu.HesapNo, krediSorguCevap, sorgu);
 
             return krediSorguCevap;
         }
@@ -231,7 +236,7 @@ namespace BordroKrediSorgu.Controllers
 
         private bool UpdateKrediSorgu(string RequestId, string status)
         {
-            string message;
+            //string message;
             //DBClassSingle db = new DBClassSingle();
 
             //DataTable dt = db.ExecuteSql("INSERT INTO [dbo].[CreditRequests] ([AppDbVersion],[AppWebVersion],[LastChangeDate],) " +

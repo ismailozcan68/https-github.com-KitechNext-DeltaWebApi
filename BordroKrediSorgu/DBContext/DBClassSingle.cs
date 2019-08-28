@@ -20,7 +20,6 @@ namespace Delta.UTL.DBUtil
         private SqlConnection dbConn;
         public string errorStr = string.Empty;
         public int lastInsertId;
-        private static string respositoryEncryptionKey = "!!Deltasql1920!!@";
         public static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         
         SqlCommand cmd = new SqlCommand();
