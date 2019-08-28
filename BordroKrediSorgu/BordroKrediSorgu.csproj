@@ -223,6 +223,13 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Web.Global.config" />
+    <Content Include="Web.Global.Debug.config">
+      <DependentUpon>Web.Global.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Global.Release.config">
+      <DependentUpon>Web.Global.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
