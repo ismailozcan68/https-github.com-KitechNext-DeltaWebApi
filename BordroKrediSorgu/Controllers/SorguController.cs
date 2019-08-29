@@ -67,11 +67,17 @@ namespace BordroKrediSorgu.Controllers
             DataTable dth = GetHesapBilgi(hesapno);
             if (dth != null)
             {
+                //Update CompanyCode,User Code
+                UpdateKrediSorgu(RequestId, dth.Rows[0]["FIRMAADI"].ToString().Trim(), dth.Rows[0]["TCNO"].ToString().Trim());
+
                 StringBuilder sb = new StringBuilder();
                 sb.Append("RequestId=").Append(RequestId).Append(" ")
-                  .Append("TCNO=").Append(dth.Rows[0]["TCNO"].ToString()).Append(" ")
-                  .Append("DEPKOD=").Append(dth.Rows[0]["DEPKOD"].ToString()).Append(" ")
-                  .Append("PERKOD=").Append(dth.Rows[0]["PERKOD"].ToString());
+                  .Append("CompanyCode=").Append(dth.Rows[0]["FIRMAADI"].ToString().Trim()).Append(" ")
+                  .Append("WorkingYear=").Append(DateTime.Today.Year).Append(" ")
+                  .Append("TCNO=").Append(dth.Rows[0]["TCNO"].ToString().Trim()).Append(" ")
+                  .Append("MaasAdet=").Append(sorgu.MaasAdet).Append(" ")
+                  .Append("KrediTutar=").Append(sorgu.KrediTutar).Append(" ")
+                  ;
 
                 //Execute Exe and Wait unit finish
                 bool hasExited = RunProcess(processName, sb.ToString());
@@ -234,17 +240,32 @@ namespace BordroKrediSorgu.Controllers
             return RequestId;
         }
 
-        private bool UpdateKrediSorgu(string RequestId, string status)
+        private bool UpdateKrediSorgu(string RequestId, string CompanyCode,string UserCode)
         {
-            //string message;
-            //DBClassSingle db = new DBClassSingle();
+            string message;
+            try
+            {
+                DBClassSingle db = new DBClassSingle();
 
-            //DataTable dt = db.ExecuteSql("INSERT INTO [dbo].[CreditRequests] ([AppDbVersion],[AppWebVersion],[LastChangeDate],) " +
-            //    " Values (@AppDbVersion,@AppWebVersion,GetDate())", out message,
-            //        new Parameter() { ParamName = "AppDbVersion", ParamValue = AppDbVersion },
-            //        new Parameter() { ParamName = "AppWebVersion", ParamValue = AppWebVersion });
+                DataTable dt = db.ExecuteSql("UPDATE [dbo].[CreditRequests] set CompanyCode=@CompanyCode,UserCode=@UserCode Where " +
+                    " RequestId=@RequestId", out message,
+                        new Parameter() { ParamName = "RequestId", ParamValue = RequestId },
+                        new Parameter() { ParamName = "CompanyCode", ParamValue = CompanyCode },
+                        new Parameter() { ParamName = "UserCode", ParamValue = UserCode });
 
-            return true;
+                if (message != null && message != "")
+                {
+                    throw new Exception(message);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
         }
     }
 
