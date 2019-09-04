@@ -79,16 +79,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>08/29/2019 09:26:59</publishTime>
+      <publishTime>09/04/2019 15:25:58</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>08/29/2019 09:26:59</publishTime>
+      <publishTime>09/04/2019 15:25:58</publishTime>
     </File>
     <File Include="bin/BordroKrediSorgu.dll">
-      <publishTime>08/29/2019 09:26:52</publishTime>
+      <publishTime>09/04/2019 15:25:52</publishTime>
     </File>
     <File Include="bin/BordroKrediSorgu.pdb">
-      <publishTime>08/29/2019 09:26:52</publishTime>
+      <publishTime>09/04/2019 15:25:52</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>05/24/2018 13:38:22</publishTime>
@@ -318,11 +318,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="fonts/glyphicons-halflings-regular.woff2">
       <publishTime>08/23/2019 09:04:48</publishTime>
     </File>
+    <File Include="NLog.config">
+      <publishTime>09/04/2019 14:30:39</publishTime>
+    </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>08/29/2019 09:26:54</publishTime>
+      <publishTime>09/04/2019 15:25:53</publishTime>
     </File>
     <File Include="readme.txt">
-      <publishTime>08/28/2019 10:33:46</publishTime>
+      <publishTime>08/29/2019 14:27:32</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>08/23/2019 09:04:48</publishTime>
@@ -367,7 +370,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/23/2019 09:04:45</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/29/2019 09:26:53</publishTime>
+      <publishTime>09/04/2019 15:25:52</publishTime>
     </File>
     <File Include="Web.Global.config">
       <publishTime>08/28/2019 14:46:33</publishTime>

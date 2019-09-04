@@ -17,14 +17,17 @@ namespace BordroKrediSorgu.Controllers
     public class SorguController : ApiController
     {
         private static bool isConfigReady = false;
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static string processName = "C:\\Source\\Repos\\SamplePayroll\\SamplePayroll\\bin\\Debug\\SamplePayroll.exe";
+        private static string payrollWorkDir = "E:\\Delta";
 
         public SorguController()
         {
             if (!isConfigReady)
             {
                 processName = ConfigurationManager.AppSettings["PayrollApp"];
+                payrollWorkDir = ConfigurationManager.AppSettings["PayrollWorkDir"];
                 isConfigReady = true;
             }
         }
@@ -52,6 +55,9 @@ namespace BordroKrediSorgu.Controllers
 
         private void DoKrediSorgu(string hesapno, KrediSorguCevap krediSorguCevap, KrediSorgu sorgu)
         {
+            try
+            {
+                
             //Log Info To DB
             string RequestId = WriteKrediSorgu(sorgu);
 
@@ -62,7 +68,7 @@ namespace BordroKrediSorgu.Controllers
 
             krediSorguCevap.Durumu = false;
             krediSorguCevap.DurumAciklama = "Uygun Değil";
-
+            logger.Debug("KrediSorgu Requested");
             //Hesap Bilgi Sorgula
             DataTable dth = GetHesapBilgi(hesapno);
             if (dth != null)
@@ -111,6 +117,13 @@ namespace BordroKrediSorgu.Controllers
                 krediSorguCevap.Durumu = false;
                 krediSorguCevap.DurumAciklama = "Hesap Kod tanımlı değil.";
             }
+            }
+            catch (Exception ex)
+            {
+                logger.Debug(ex);
+
+                throw ex;
+            }
         }
 
         // POST api/Sorgu
@@ -126,9 +139,13 @@ namespace BordroKrediSorgu.Controllers
 
         private bool RunProcess(string processName, string arguments)
         {
+            //logger.Debug(processName + " " + arguments);
+
             Process process = new Process();
             process.StartInfo.FileName = processName;
             process.StartInfo.Arguments = arguments;
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.WorkingDirectory = payrollWorkDir;
             process.Start();
             process.WaitForExit();
             return process.HasExited;

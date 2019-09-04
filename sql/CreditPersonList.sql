@@ -1,0 +1,26 @@
+USE [NODEDB]
+GO
+
+/****** Object:  Table [dbo].[CreditPersonList]    Script Date: 3.09.2019 10:03:59 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[CreditPersonList](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[TCNO] [nchar](11) NOT NULL,
+	[DEPKOD] [nchar](4) NULL,
+	[PERKOD] [nchar](5) NULL,
+	[FIRMAADI] [nchar](20) NULL,
+	[HSKOD] [nchar](20) NOT NULL,
+	[ISLEMTARIHI] [datetime] NOT NULL,
+ CONSTRAINT [PK_CreditPersonList] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 65) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
