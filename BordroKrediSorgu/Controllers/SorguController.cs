@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -45,8 +46,15 @@ namespace BordroKrediSorgu.Controllers
             KrediSorguCevap krediSorguCevap = new KrediSorguCevap();
             KrediSorgu sorgu = new KrediSorgu();
             sorgu.HesapNo = hesapno;
-            sorgu.MaasAdet = int.Parse(maasadet);
-            sorgu.KrediTutar = double.Parse(kredi);
+
+            NumberFormatInfo format = new NumberFormatInfo();
+            //// Set the 'splitter' for thousands
+            //format.NumberGroupSeparator = ",";
+            // Set the decimal seperator
+            format.NumberDecimalSeparator = ".";
+
+            sorgu.MaasAdet = double.Parse(maasadet, format);
+            sorgu.KrediTutar = double.Parse(kredi, format);
 
             DoKrediSorgu(hesapno, krediSorguCevap, sorgu);
 
