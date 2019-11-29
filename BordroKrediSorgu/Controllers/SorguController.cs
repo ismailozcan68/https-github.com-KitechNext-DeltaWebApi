@@ -43,6 +43,11 @@ namespace BordroKrediSorgu.Controllers
         // GET api/Sorgu/5
         public KrediSorguCevap Get(string hesapno, string maasadet, string kredi)
         {
+            if (maasadet.Contains(",") || kredi.Contains(","))
+            {
+                throw new Exception("Numeric value format exception");
+            }
+
             KrediSorguCevap krediSorguCevap = new KrediSorguCevap();
             KrediSorgu sorgu = new KrediSorgu();
             sorgu.HesapNo = hesapno;
