@@ -86,13 +86,16 @@ namespace BordroKrediSorgu.Controllers
             DataTable dth = GetHesapBilgi(hesapno);
             if (dth != null)
             {
+                //Hep bir önceki ay için sorgu altıyor.                      
+                DateTime workingYear = DateTime.Today.AddMonths(-1);
+                
                 //Update CompanyCode,User Code
                 UpdateKrediSorgu(RequestId, dth.Rows[0]["FIRMAADI"].ToString().Trim(), dth.Rows[0]["TCNO"].ToString().Trim());
 
                 StringBuilder sb = new StringBuilder();
                 sb.Append("RequestId=").Append(RequestId).Append(" ")
                   .Append("CompanyCode=").Append(dth.Rows[0]["FIRMAADI"].ToString().Trim()).Append(" ")
-                  .Append("WorkingYear=").Append(DateTime.Today.Year).Append(" ")
+                  .Append("WorkingYear=").Append(workingYear.Year).Append(" ")
                   .Append("TCNO=").Append(dth.Rows[0]["TCNO"].ToString().Trim()).Append(" ")
                   .Append("MaasAdet=").Append(sorgu.MaasAdet).Append(" ")
                   .Append("KrediTutar=").Append(sorgu.KrediTutar).Append(" ")
