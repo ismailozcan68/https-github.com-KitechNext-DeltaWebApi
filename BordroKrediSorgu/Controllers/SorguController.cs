@@ -87,8 +87,10 @@ namespace BordroKrediSorgu.Controllers
             if (dth != null)
             {
                 //Hep bir önceki ay için sorgu altıyor.                      
-                DateTime workingYear = DateTime.Today.AddMonths(-1);
-                
+                //DateTime workingYear = DateTime.Today.AddMonths(-1);
+
+                 DateTime workingYear = DateTime.Today;
+
                 //Update CompanyCode,User Code
                 UpdateKrediSorgu(RequestId, dth.Rows[0]["FIRMAADI"].ToString().Trim(), dth.Rows[0]["TCNO"].ToString().Trim());
 
