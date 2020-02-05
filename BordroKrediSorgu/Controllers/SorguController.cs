@@ -74,7 +74,7 @@ namespace BordroKrediSorgu.Controllers
             //Log Info To DB
             string RequestId = WriteKrediSorgu(sorgu);
 
-            //bilin Sorgulam Todo
+            //Todo Bilin Sorgulam
             krediSorguCevap.Durumu = false;
             krediSorguCevap.DurumAciklama = "Bilin Uygun değil";
 
@@ -157,7 +157,7 @@ namespace BordroKrediSorgu.Controllers
 
         private bool RunProcess(string processName, string arguments)
         {
-            //logger.Debug(processName + " " + arguments);
+            logger.Trace(processName + " " + arguments);
 
             Process process = new Process();
             process.StartInfo.FileName = processName;
