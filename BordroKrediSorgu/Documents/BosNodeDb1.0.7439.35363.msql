@@ -1,0 +1,65 @@
+ BEGIN TRY
+   BEGIN TRANSACTION
+
+IF NOT EXISTS(SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Requests]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[Requests] (
+   [Id] [bigint] NOT NULL
+      IDENTITY (1,1),
+   [Date] [datetime] NOT NULL
+      CONSTRAINT [DF_Requests_Date] DEFAULT (getdate()),
+   [RepositoryId] [bigint] NULL,
+   [CompanyId] [bigint] NULL,
+   [CompanyCode] [varchar](50) NULL,
+   [UserCode] [varchar](51) NULL,
+   [WorkingYear] [smallint] NULL,
+   [Description] [varchar](250) NULL,
+   [RequestId] [varchar](50) NULL,
+   [Request] [varchar](max) NULL,
+   [DeltaStatus] [varchar](50) NULL,
+   [ResponseDate] [datetime] NULL,
+   [TryCount] [smallint] NULL,
+   [Response] [varbinary](max) NULL
+
+   ,CONSTRAINT [PK_Requests] PRIMARY KEY CLUSTERED ([Id])
+)
+
+
+END
+IF NOT EXISTS(SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[system_logging]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[system_logging] (
+   [system_logging_guid] [uniqueidentifier] NOT NULL
+      CONSTRAINT [DF_system_logging_system_logging_guid] DEFAULT (newid()) ROWGUIDCOL ,
+   [entered_date] [datetime] NULL
+      CONSTRAINT [DF_system_logging_entered_date] DEFAULT (getdate()),
+   [log_application] [varchar](200) NULL,
+   [log_date] [varchar](100) NULL,
+   [log_level] [varchar](100) NULL,
+   [log_logger] [varchar](8000) NULL,
+   [log_message] [nvarchar](max) NULL,
+   [log_machine_name] [varchar](8000) NULL,
+   [log_user_name] [varchar](8000) NULL,
+   [log_call_site] [varchar](8000) NULL,
+   [log_thread] [varchar](100) NULL,
+   [log_exception] [nvarchar](max) NULL,
+   [log_stacktrace] [nvarchar](max) NULL
+
+   ,CONSTRAINT [PK_system_logging] PRIMARY KEY CLUSTERED ([system_logging_guid])
+)
+
+
+END
+
+   COMMIT TRANSACTION;
+END TRY
+BEGIN CATCH
+   ROLLBACK TRANSACTION;
+	Declare @err varchar(max);
+	Set @err = ERROR_MESSAGE() + ' occurred at Line_Number: ' + CAST(ERROR_LINE() AS VARCHAR(50));
+	RAISERROR('%s', 16, 1, @err)
+END CATCH;
+GO
+-- INSERT INTO [dbo].[SystemAppVersions] ([AppDbVersion],[AppWebVersion],[LastChangeDate]) 
+-- VALUES(BosNodeDb10743935363, 'BosNodeDb1.0.7439.35363', GETDATE())
+-- GO
