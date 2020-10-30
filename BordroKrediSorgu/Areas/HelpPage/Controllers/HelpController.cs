@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using BordroKrediSorgu.Areas.HelpPage.ModelDescriptions;
-using BordroKrediSorgu.Areas.HelpPage.Models;
+using DeltaWebApi.Areas.HelpPage.ModelDescriptions;
+using DeltaWebApi.Areas.HelpPage.Models;
 
-namespace BordroKrediSorgu.Areas.HelpPage.Controllers
+namespace DeltaWebApi.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

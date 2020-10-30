@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace BordroKrediSorgu.Areas.HelpPage.ModelDescriptions
+namespace DeltaWebApi.Areas.HelpPage.ModelDescriptions
 {
     public class ComplexTypeModelDescription : ModelDescription
     {

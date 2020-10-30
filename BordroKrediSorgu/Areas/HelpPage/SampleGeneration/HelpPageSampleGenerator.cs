@@ -13,7 +13,7 @@ using System.Web.Http.Description;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 
-namespace BordroKrediSorgu.Areas.HelpPage
+namespace DeltaWebApi.Areas.HelpPage
 {
     /// <summary>
     /// This class will generate the samples for the help page.

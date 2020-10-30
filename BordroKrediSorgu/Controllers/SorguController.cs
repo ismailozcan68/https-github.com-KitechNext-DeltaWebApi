@@ -1,4 +1,4 @@
-﻿using BordroKrediSorgu.Models;
+﻿using DeltaWebApi.Models;
 using Delta.UTL.DBUtil;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Net.Http;
 using System.Text;
 using System.Web.Http;
 
-namespace BordroKrediSorgu.Controllers
+namespace DeltaWebApi.Controllers
 {
     public class SorguController : ApiController
     {

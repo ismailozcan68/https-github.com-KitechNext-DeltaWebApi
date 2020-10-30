@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace BordroKrediSorgu.Areas.HelpPage.ModelDescriptions
+namespace DeltaWebApi.Areas.HelpPage.ModelDescriptions
 {
     public interface IModelDocumentationProvider
     {

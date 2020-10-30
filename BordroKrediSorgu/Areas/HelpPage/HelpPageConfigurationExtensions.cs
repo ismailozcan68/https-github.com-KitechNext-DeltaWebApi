@@ -11,10 +11,10 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using BordroKrediSorgu.Areas.HelpPage.ModelDescriptions;
-using BordroKrediSorgu.Areas.HelpPage.Models;
+using DeltaWebApi.Areas.HelpPage.ModelDescriptions;
+using DeltaWebApi.Areas.HelpPage.Models;
 
-namespace BordroKrediSorgu.Areas.HelpPage
+namespace DeltaWebApi.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {

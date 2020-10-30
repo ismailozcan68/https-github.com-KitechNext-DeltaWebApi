@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace BordroKrediSorgu
+namespace DeltaWebApi
 {
     public class FilterConfig
     {

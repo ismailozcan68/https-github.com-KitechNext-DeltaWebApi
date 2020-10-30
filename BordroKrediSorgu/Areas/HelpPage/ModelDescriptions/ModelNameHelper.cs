@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace BordroKrediSorgu.Areas.HelpPage.ModelDescriptions
+namespace DeltaWebApi.Areas.HelpPage.ModelDescriptions
 {
     internal static class ModelNameHelper
     {

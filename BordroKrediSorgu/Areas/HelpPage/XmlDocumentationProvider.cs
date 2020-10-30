@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Xml.XPath;
-using BordroKrediSorgu.Areas.HelpPage.ModelDescriptions;
+using DeltaWebApi.Areas.HelpPage.ModelDescriptions;
 
-namespace BordroKrediSorgu.Areas.HelpPage
+namespace DeltaWebApi.Areas.HelpPage
 {
     /// <summary>
     /// A custom <see cref="IDocumentationProvider"/> that reads the API documentation from an XML documentation file.

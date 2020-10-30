@@ -3,7 +3,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 
-namespace BordroKrediSorgu.Areas.HelpPage
+namespace DeltaWebApi.Areas.HelpPage
 {
     public static class ApiDescriptionExtensions
     {

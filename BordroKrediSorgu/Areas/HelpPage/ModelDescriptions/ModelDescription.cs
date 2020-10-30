@@ -1,6 +1,6 @@
 using System;
 
-namespace BordroKrediSorgu.Areas.HelpPage.ModelDescriptions
+namespace DeltaWebApi.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.

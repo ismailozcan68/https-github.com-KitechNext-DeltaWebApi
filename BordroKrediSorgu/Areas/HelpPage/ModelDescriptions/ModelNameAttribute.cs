@@ -1,6 +1,6 @@
 using System;
 
-namespace BordroKrediSorgu.Areas.HelpPage.ModelDescriptions
+namespace DeltaWebApi.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Use this attribute to change the name of the <see cref="ModelDescription"/> generated for a type.
