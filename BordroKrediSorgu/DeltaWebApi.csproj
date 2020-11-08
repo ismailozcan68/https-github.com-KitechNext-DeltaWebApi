@@ -193,6 +193,7 @@
     <Compile Include="DBContext\EncryptionLibrary.cs" />
     <Compile Include="DBContext\StringUtil.cs" />
     <Compile Include="Controllers\SorguController.cs" />
+    <Compile Include="Filters\DeltaValidateModelAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

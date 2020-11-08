@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DeltaWebApi.Filters;
+using Newtonsoft.Json;
 using System;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
@@ -21,6 +22,10 @@ namespace DeltaWebApi
                 routeTemplate: "api/{controller}/{action}/{id}",   // delta
                 defaults: new { id = RouteParameter.Optional }
             );
+
+
+            // Delat model dogrulama
+            config.Filters.Add(new DeltaValidateModelAttribute());
 
             config.Formatters.Add(new BrowserJsonFormatter());
         }
