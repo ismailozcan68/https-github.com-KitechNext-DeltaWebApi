@@ -17,7 +17,8 @@ namespace DeltaWebApi
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                //routeTemplate: "api/{controller}/{id}", orjinal
+                routeTemplate: "api/{controller}/{action}/{id}",   // delta
                 defaults: new { id = RouteParameter.Optional }
             );
 
