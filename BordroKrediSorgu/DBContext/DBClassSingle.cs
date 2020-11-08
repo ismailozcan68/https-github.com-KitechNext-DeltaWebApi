@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 using System.Configuration;
+using DeltaWebApi.DBContext;
 
 namespace Delta.UTL.DBUtil
 {

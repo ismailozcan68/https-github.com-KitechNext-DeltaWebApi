@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.IO;
 
-namespace Delta.UTL.DBUtil
+namespace DeltaWebApi.DBContext
 {
     public class EncryptionLibrary
     {

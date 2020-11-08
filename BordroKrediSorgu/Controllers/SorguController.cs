@@ -1,15 +1,10 @@
 ﻿using DeltaWebApi.Models;
 using Delta.UTL.DBUtil;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Web.Http;
 
@@ -33,13 +28,6 @@ namespace DeltaWebApi.Controllers
             }
         }
 
-
-        //// GET api/Sorgu
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
         // GET api/Sorgu/5
         public KrediSorguCevap Get(string hesapno, string maasadet, string kredi)
         {
@@ -53,9 +41,6 @@ namespace DeltaWebApi.Controllers
             sorgu.HesapNo = hesapno;
 
             NumberFormatInfo format = new NumberFormatInfo();
-            //// Set the 'splitter' for thousands
-            //format.NumberGroupSeparator = ",";
-            // Set the decimal seperator
             format.NumberDecimalSeparator = ".";
 
             sorgu.MaasAdet = double.Parse(maasadet, format);
@@ -64,84 +49,6 @@ namespace DeltaWebApi.Controllers
             DoKrediSorgu(hesapno, krediSorguCevap, sorgu);
 
             return krediSorguCevap;
-        }
-
-        private void DoKrediSorgu(string hesapno, KrediSorguCevap krediSorguCevap, KrediSorgu sorgu)
-        {
-            try
-            {
-                
-            //Log Info To DB
-            string RequestId = WriteKrediSorgu(sorgu);
-
-            //Todo Bilin Sorgulam
-            krediSorguCevap.Durumu = false;
-            krediSorguCevap.DurumAciklama = "Bilin Uygun değil";
-
-
-            krediSorguCevap.Durumu = false;
-            krediSorguCevap.DurumAciklama = "Uygun Değil";
-            logger.Debug("KrediSorgu Requested");
-            //Hesap Bilgi Sorgula
-            DataTable dth = GetHesapBilgi(hesapno);
-            if (dth != null)
-            {
-                //Hep bir önceki ay için sorgu altıyor.                      
-                //DateTime workingYear = DateTime.Today.AddMonths(-1);
-
-                 DateTime workingYear = DateTime.Today;
-
-                //Update CompanyCode,User Code
-                UpdateKrediSorgu(RequestId, dth.Rows[0]["FIRMAADI"].ToString().Trim(), dth.Rows[0]["TCNO"].ToString().Trim());
-
-                StringBuilder sb = new StringBuilder();
-                sb.Append("RequestId=").Append(RequestId).Append(" ")
-                  .Append("CompanyCode=").Append(dth.Rows[0]["FIRMAADI"].ToString().Trim()).Append(" ")
-                  .Append("WorkingYear=").Append(workingYear.Year).Append(" ")
-                  .Append("TCNO=").Append(dth.Rows[0]["TCNO"].ToString().Trim()).Append(" ")
-                  .Append("MaasAdet=").Append(sorgu.MaasAdet).Append(" ")
-                  .Append("KrediTutar=").Append(sorgu.KrediTutar).Append(" ")
-                  ;
-
-                //Execute Exe and Wait unit finish
-                bool hasExited = RunProcess(processName, sb.ToString());
-                if (hasExited)
-                {
-                    //After Exe operation Get Status from DB
-                    DataTable dt = GetKrediDurum(RequestId);
-                    if (dt != null)
-                    {
-                        if (dt.Rows[0]["Status"].ToString() == "1")
-                        {
-                            krediSorguCevap.Durumu = true;
-                        }
-                        else
-                        {
-                            krediSorguCevap.Durumu = false;
-                        }
-
-                        krediSorguCevap.DurumAciklama = dt.Rows[0]["StatusDescription"].ToString();
-
-                    }
-                    else
-                    {
-                        krediSorguCevap.Durumu = false;
-                        krediSorguCevap.DurumAciklama = "Kredi bilgisi okunamadı.";
-                    }
-                }
-            }
-            else
-            {
-                krediSorguCevap.Durumu = false;
-                krediSorguCevap.DurumAciklama = "Hesap Kod tanımlı değil.";
-            }
-            }
-            catch (Exception ex)
-            {
-                logger.Debug(ex);
-
-                throw ex;
-            }
         }
 
         // POST api/Sorgu
@@ -153,6 +60,82 @@ namespace DeltaWebApi.Controllers
             DoKrediSorgu(sorgu.HesapNo, krediSorguCevap, sorgu);
 
             return krediSorguCevap;
+        }
+
+        private void DoKrediSorgu(string hesapno, KrediSorguCevap krediSorguCevap, KrediSorgu sorgu)
+        {
+            try
+            {
+                //Log Info To DB
+                string RequestId = WriteKrediSorgu(sorgu);
+
+                //Todo Bilin Sorgulam
+                krediSorguCevap.Durumu = false;
+                krediSorguCevap.DurumAciklama = "Bilin Uygun değil";
+
+
+                krediSorguCevap.Durumu = false;
+                krediSorguCevap.DurumAciklama = "Uygun Değil";
+                logger.Debug("KrediSorgu Requested");
+                //Hesap Bilgi Sorgula
+                DataTable dth = GetHesapBilgi(hesapno);
+                if (dth != null)
+                {
+                    //Hep bir önceki ay için sorgu altıyor.                      
+                    //DateTime workingYear = DateTime.Today.AddMonths(-1);
+
+                    DateTime workingYear = DateTime.Today;
+
+                    //Update CompanyCode,User Code
+                    UpdateKrediSorgu(RequestId, dth.Rows[0]["FIRMAADI"].ToString().Trim(), dth.Rows[0]["TCNO"].ToString().Trim());
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append("RequestId=").Append(RequestId).Append(" ")
+                      .Append("CompanyCode=").Append(dth.Rows[0]["FIRMAADI"].ToString().Trim()).Append(" ")
+                      .Append("WorkingYear=").Append(workingYear.Year).Append(" ")
+                      .Append("TCNO=").Append(dth.Rows[0]["TCNO"].ToString().Trim()).Append(" ")
+                      .Append("MaasAdet=").Append(sorgu.MaasAdet).Append(" ")
+                      .Append("KrediTutar=").Append(sorgu.KrediTutar).Append(" ")
+                      ;
+
+                    //Execute Exe and Wait unit finish
+                    bool hasExited = RunProcess(processName, sb.ToString());
+                    if (hasExited)
+                    {
+                        //After Exe operation Get Status from DB
+                        DataTable dt = GetKrediDurum(RequestId);
+                        if (dt != null)
+                        {
+                            if (dt.Rows[0]["Status"].ToString() == "1")
+                            {
+                                krediSorguCevap.Durumu = true;
+                            }
+                            else
+                            {
+                                krediSorguCevap.Durumu = false;
+                            }
+
+                            krediSorguCevap.DurumAciklama = dt.Rows[0]["StatusDescription"].ToString();
+                        }
+                        else
+                        {
+                            krediSorguCevap.Durumu = false;
+                            krediSorguCevap.DurumAciklama = "Kredi bilgisi okunamadı.";
+                        }
+                    }
+                }
+                else
+                {
+                    krediSorguCevap.Durumu = false;
+                    krediSorguCevap.DurumAciklama = "Hesap Kod tanımlı değil.";
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Debug(ex);
+
+                throw ex;
+            }
         }
 
         private bool RunProcess(string processName, string arguments)
@@ -217,53 +200,50 @@ namespace DeltaWebApi.Controllers
             string RequestId = "";
             try
             {
- 
-            DBClassSingle db = new DBClassSingle();
+                DBClassSingle db = new DBClassSingle();
+                RequestId = Guid.NewGuid().ToString();
 
-            RequestId = Guid.NewGuid().ToString();
+                string insertSQL= @"INSERT INTO [dbo].[CreditRequests]
+                                    ([RequestId]
+                                    ,[RequestDate]
+                                    ,[CompanyCode]
+                                    ,[UserCode]
+                                    ,[WorkingYear]
+                                    ,[Request]
+                                    ,[HesapNo]
+                                    ,[MaasAdet]
+                                    ,[KrediTutar]
+                                    ,[Status]
+                                    ,[StatusDescription]
+                                    ,[ResponseDate]
+                                    ,[TryCount])
+                                VALUES
+                                    (@RequestId
+                                    ,GetDate()
+                                    ,@CompanyCode
+                                    ,@UserCode
+                                    ,@WorkingYear
+                                    ,@Request
+                                    ,@HesapNo
+                                    ,@MaasAdet
+                                    ,@KrediTutar
+                                    ,0
+                                    ,null
+                                    ,null
+                                    ,0)";
 
-            string insertSQL= @"INSERT INTO [dbo].[CreditRequests]
-                                ([RequestId]
-                                ,[RequestDate]
-                                ,[CompanyCode]
-                                ,[UserCode]
-                                ,[WorkingYear]
-                                ,[Request]
-                                ,[HesapNo]
-                                ,[MaasAdet]
-                                ,[KrediTutar]
-                                ,[Status]
-                                ,[StatusDescription]
-                                ,[ResponseDate]
-                                ,[TryCount])
-                            VALUES
-                                (@RequestId
-                                ,GetDate()
-                                ,@CompanyCode
-                                ,@UserCode
-                                ,@WorkingYear
-                                ,@Request
-                                ,@HesapNo
-                                ,@MaasAdet
-                                ,@KrediTutar
-                                ,0
-                                ,null
-                                ,null
-                                ,0)";
+                Parameter[] parameters = {
+                    new Parameter() { ParamName = "RequestId", ParamValue = RequestId },
+                    new Parameter() { ParamName = "CompanyCode", ParamValue = "" },
+                    new Parameter() { ParamName = "UserCode", ParamValue = "" },
+                    new Parameter() { ParamName = "WorkingYear", ParamValue = DateTime.Today.Year },
+                    new Parameter() { ParamName = "Request", ParamValue = Request.ToString() },
+                    new Parameter() { ParamName = "HesapNo", ParamValue = krediSorgu.HesapNo },
+                    new Parameter() { ParamName = "MaasAdet", ParamValue = krediSorgu.MaasAdet },
+                    new Parameter() { ParamName = "KrediTutar", ParamValue = krediSorgu.KrediTutar },
+                };
 
-            Parameter[] parameters = {
-                new Parameter() { ParamName = "RequestId", ParamValue = RequestId },
-                new Parameter() { ParamName = "CompanyCode", ParamValue = "" },
-                new Parameter() { ParamName = "UserCode", ParamValue = "" },
-                new Parameter() { ParamName = "WorkingYear", ParamValue = DateTime.Today.Year },
-                new Parameter() { ParamName = "Request", ParamValue = Request.ToString() },
-                new Parameter() { ParamName = "HesapNo", ParamValue = krediSorgu.HesapNo },
-                new Parameter() { ParamName = "MaasAdet", ParamValue = krediSorgu.MaasAdet },
-                new Parameter() { ParamName = "KrediTutar", ParamValue = krediSorgu.KrediTutar },
-            };
-
-            DataTable dt = db.ExecuteSql(insertSQL, out message, parameters);
-                
+                DataTable dt = db.ExecuteSql(insertSQL, out message, parameters);
             }
             catch (Exception ex)
             {
@@ -281,7 +261,6 @@ namespace DeltaWebApi.Controllers
             try
             {
                 DBClassSingle db = new DBClassSingle();
-
                 DataTable dt = db.ExecuteSql("UPDATE [dbo].[CreditRequests] set CompanyCode=@CompanyCode,UserCode=@UserCode Where " +
                     " RequestId=@RequestId", out message,
                         new Parameter() { ParamName = "RequestId", ParamValue = RequestId },

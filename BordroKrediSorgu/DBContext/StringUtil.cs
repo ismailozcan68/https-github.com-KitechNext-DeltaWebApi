@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
 using System.Xml;
+using DeltaWebApi.DBContext;
 
 namespace Delta.UTL.DBUtil
 {
@@ -22,6 +23,7 @@ namespace Delta.UTL.DBUtil
             }
             return result;
         }
+
         public static bool IsNull(this object obj)
         {
             try
@@ -33,12 +35,14 @@ namespace Delta.UTL.DBUtil
                 return true;
             }
         }
+
         public static bool IsStringEmpty(string txt)
         {
             if (txt == null) return true;
             if (txt.Trim().Length == 0) return true;
             return false;
         }
+
         public static bool IsNumeric(string s)
         {
             int intOutput;
@@ -163,6 +167,7 @@ namespace Delta.UTL.DBUtil
             }
             return new string(result);
         }
+
         public static string SerializeObjectToXML(object obj)
         {
 
