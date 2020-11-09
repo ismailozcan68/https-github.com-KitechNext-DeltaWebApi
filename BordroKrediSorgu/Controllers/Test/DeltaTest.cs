@@ -98,31 +98,31 @@ namespace DeltaWebApi.Controllers.Test
         }
 
         // GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET: api/<controller>
-        public string GetById(int id)
-        {
-            return "value";
-        }
+        //public string GetById(int id)
+        //{
+        //    return "value";
+        //}
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
-        {
-        }
+        //public void Post([FromBody]string value)
+        //{
+        //}
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
+        //public void Delete(int id)
+        //{
+        //}
 
         private bool IsIpAddressAllowed(string ipAddr)
         {

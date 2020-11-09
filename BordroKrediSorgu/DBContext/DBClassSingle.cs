@@ -51,11 +51,11 @@ namespace Delta.UTL.DBUtil
             {
                 try
                 {
-                    return EncryptionLibrary.DecryptText(ConfigurationManager.ConnectionStrings["Database"].ConnectionString,EncryptionLibrary.defaultEncryptionKey);
+                    return EncryptionLibrary.DecryptText(ConfigurationManager.ConnectionStrings["DeltaWebApiContext"].ConnectionString,EncryptionLibrary.defaultEncryptionKey);
                 }
                 catch (Exception)
                 {
-                    return ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
+                    return ConfigurationManager.ConnectionStrings["DeltaWebApiContext"].ConnectionString;
                 }
             }
         }

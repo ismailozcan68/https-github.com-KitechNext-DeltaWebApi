@@ -1,10 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DeltaWebApi.Models
 {
+    [Table("HrEmployeeAgi")]
     public class HrEmployeeAgi //!AGI
     {
+        //[JsonIgnore]
+        //[Column("Id"), ForeignKey("Id")]
+        //[Index("IX_Id", 1, IsUnique = true)]
+
+        [Key]
+        //[Column(Order = 0)]
+        public Guid Id { get; set; }
+
         public long EMP_IDENTITY { get; set; }
 
         public long EMP_REL_ID { get; set; }       // SREAL

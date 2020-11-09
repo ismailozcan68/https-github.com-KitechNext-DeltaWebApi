@@ -30,7 +30,6 @@ namespace DeltaWebApi.Controllers.Test
         private string _serviceRepositoryId;
         private string _serviceCompanyId;
 
-
         public DeltaTest2Controller()
         {
             if (ConfigurationManager.AppSettings["CustomerApiAllowedIpAddresList"] != null)

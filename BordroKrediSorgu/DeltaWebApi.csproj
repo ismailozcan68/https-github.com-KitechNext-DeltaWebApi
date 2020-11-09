@@ -187,6 +187,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Test\DeltaTest.cs" />
     <Compile Include="Controllers\Test\DeltaTest2Controller.cs" />
+    <Compile Include="Controllers\Test\ZDeltaTestsController.cs" />
+    <Compile Include="Controllers\v1\HrEmployeeAgisController.cs" />
+    <Compile Include="Controllers\v1\HrEmployeesController.cs" />
     <Compile Include="DBContext\DBClass.cs" />
     <Compile Include="DBContext\DBClassSingle.cs" />
     <Compile Include="DBContext\DBUtils.cs" />
@@ -198,12 +201,25 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PasswordPolicy.cs" />
+    <Compile Include="Migrations\202011081755122_ilkkurulum.cs" />
+    <Compile Include="Migrations\202011081755122_ilkkurulum.Designer.cs">
+      <DependentUpon>202011081755122_ilkkurulum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011081824079_Agi.cs" />
+    <Compile Include="Migrations\202011081824079_Agi.Designer.cs">
+      <DependentUpon>202011081824079_Agi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Base\BaseTableFieldDNV.cs" />
+    <Compile Include="Models\Base\ResultModel.cs" />
+    <Compile Include="Models\DeltaWebApiContext.cs" />
     <Compile Include="Models\HrEmployee.cs" />
     <Compile Include="Models\HrEmployeeAgi.cs" />
     <Compile Include="Models\KrediSorgu.cs" />
     <Compile Include="Models\KrediSorguCevap.cs" />
+    <Compile Include="Models\ZDeltaTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\DeltaWebApiUtils.cs" />
     <Compile Include="Util\MyClass.cs" />
     <Compile Include="Util\ObjectExtention.cs" />
   </ItemGroup>
@@ -380,7 +396,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\v1\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -393,6 +408,14 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202011081755122_ilkkurulum.resx">
+      <DependentUpon>202011081755122_ilkkurulum.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011081824079_Agi.resx">
+      <DependentUpon>202011081824079_Agi.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

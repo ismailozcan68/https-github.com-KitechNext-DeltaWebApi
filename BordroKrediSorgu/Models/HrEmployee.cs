@@ -6,6 +6,9 @@ namespace DeltaWebApi.Models
 {
     public class HrEmployee : BaseTableFieldDNV  // Sicil kaydi 
     {
+        [Key]
+        public Guid Id { get; set; }
+
         [StringLength(100)]
         public string EMP_NAME { get; set; }
 

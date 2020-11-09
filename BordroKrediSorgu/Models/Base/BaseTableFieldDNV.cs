@@ -5,9 +5,9 @@ namespace DeltaWebApi.Models.Base
 {
     public class BaseTableFieldDNV  
     {
-        public long Id { get; set; }
+        //public long Id { get; set; }
 
-        public Guid GuidId { get; set; }
+        //public Guid GuidId { get; set; }
 
         public int RecVersion { get; set; }
 

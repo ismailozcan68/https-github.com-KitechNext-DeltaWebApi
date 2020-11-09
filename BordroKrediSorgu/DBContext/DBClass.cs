@@ -56,7 +56,7 @@ namespace DeltaWebApi.DBContext
         {
             get
             {
-                return ConfigurationManager.ConnectionStrings["Database"].ConnectionString;
+                return ConfigurationManager.ConnectionStrings["DeltaWebApiContext"].ConnectionString;
             }
         }
 
